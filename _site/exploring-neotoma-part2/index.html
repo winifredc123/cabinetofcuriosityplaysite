@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Neotoma Part II: extinct mammal distributions - Cabinet of Curiosity</title>
+
+  <!-- Edit site and author settings in `_config.yml` to make the social details your own -->
+
+    <meta content="Cabinet of Curiosity" property="og:site_name">
+  
+    <meta content="Neotoma Part II: extinct mammal distributions" property="og:title">
+  
+  
+    <meta content="article" property="og:type">
+  
+  
+    <meta content="Exploring the data of natural history." property="og:description">
+  
+  
+    <meta content="http://localhost:4000/exploring-neotoma-part2/" property="og:url">
+  
+  
+    <meta content="2018-03-27T14:00:00-07:00" property="article:published_time">
+    <meta content="http://localhost:4000/about/" property="article:author">
+  
+  
+    <meta content="http://localhost:4000/assets/img/mammoths_1.jpg" property="og:image">
+  
+  
+    
+  
+  
+    
+  
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@">
+    <meta name="twitter:creator" content="@ofcuriositydata">
+  
+    <meta name="twitter:title" content="Neotoma Part II: extinct mammal distributions">
+  
+  
+    <meta name="twitter:url" content="http://localhost:4000/exploring-neotoma-part2/">
+  
+  
+    <meta name="twitter:description" content="Exploring the data of natural history.">
+  
+  
+    <meta name="twitter:image:src" content="http://localhost:4000/assets/img/mammoths_1.jpg">
+  
+
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#263959">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#263959">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#263959">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <aside class="sidebar">
+  <header>
+    <div class="about">
+      <div class="cover-author-image">
+        <a href="/"><img src="/assets/img/david-freeman.jpg" alt="Cabinet of Curiosity"></a>
+      </div>
+      <div class="author-name">Cabinet of Curiosity</div>
+      <p>Exploring the data of natural history</p>
+    </div>
+  </header> <!-- End Header -->
+  <footer>
+    <section class="contact">
+      <h3 class="contact-title">About</h3>
+      <center><p><a href="/about" target="_blank"><img src="/assets/img/about_icon.png" alt="" height="18" width="18" </a></a></p></center>
+    </section>
+    <section class="contact">
+      <h3 class="contact-title">Contact Us</h3>
+      <ul>
+        
+          <li><a href="https://twitter.com/ofcuriositydata" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        
+        
+          <li class="github"><a href="http://github.com/cabinetofcuriosity" target="_blank"><i class="fa fa-github"></i></a></li>
+        
+        
+          <li class="email"><a href="mailto:ofcuriositydata"><i class="fa fa-envelope-o"></i></a></li>
+        
+      </ul>
+    </section> <!-- End Section Contact -->
+    <div class="copyright">
+      <p>2018 &copy; Cabinet of Curiosity</p>
+    </div>
+  </footer> <!-- End Footer -->
+</aside> <!-- End Sidebar -->
+<div class="content-box clearfix">
+  <article class="article-page">
+  <div class="page-content">
+    
+    <div class="page-cover-image">
+      <img class="page-image" src=/assets/img/mammoths_1.jpg alt="Neotoma Part II: extinct mammal distributions">
+    </div> <!-- End Page Cover Image -->
+    
+    <div class="wrap-content">
+      <header class="header-page">
+        <h1 class="page-title">Neotoma Part II: extinct mammal distributions</h1>
+        <div class="page-date"><span>2018, Mar 27&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+      </header>
+      <p>In the <a href="https://cabinetofcuriosity.github.io/cabinetofcuriosity_site/retrieving-summary-neotoma/">previous post</a>, we connected to the <a href="https://www.neotomadb.org/">Neotoma database</a> which houses Paleoecological data from plants to animal. We isolated the fauna dataset which includes bone samples retreived from hundreds of dig sites. In this post we will explore the geographic distribution of exitinct mammal samples discovered across North America.  We will also learn how to interact with the <code class="highlighter-rouge">taxize</code> R package to retrieve comprehensive taxonomic information on each of our samples.</p>
+
+<p>You can download the data set that we created in the last post here: <a href="https://cabinetofcuriosity.github.io/cabinetofcuriosity_site/assets/downloads/all_fauna_data.csv">all_fauna_data.csv</a>.</p>
+
+<h2 id="set-up">Set Up</h2>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">skimr</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">taxize</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## Read in previous data.</span><span class="w">
+</span><span class="n">all_fauna_data</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.csv</span><span class="p">(</span><span class="s2">"../data/all_fauna_data.csv"</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">## subset only mammals</span><span class="w">
+</span><span class="n">mammals</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">all_fauna_data</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">taxon.group</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"Mammals"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>First and foremost let’s get re-familiar with our data. In the previous post, I used <code class="highlighter-rouge">str</code> and <code class="highlighter-rouge">head</code> to summarize our data, but now we want to know just a few more details about our data with a lot more style. So we are going to try out the fancy new <a href="https://github.com/ropenscilabs/skimr"><code class="highlighter-rouge">skimr</code></a> package….yet another Ropensci package.  I’m starting to think I will have to just re-name this blog to “Yet Another Ropensci Package”.</p>
+
+<p>Anyway, check out all the information you can get from <code class="highlighter-rouge">all_fauna_data</code> with <code class="highlighter-rouge">skimr</code>’s main function <code class="highlighter-rouge">skimr::skim</code>.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">skim</span><span class="p">(</span><span class="n">all_fauna_data</span><span class="p">)</span><span class="w"> 
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Skim summary statistics
+##  n obs: 44468 
+##  n variables: 13 
+## 
+## Variable type: factor 
+##          variable missing complete     n n_unique
+##         site.name       0    44468 44468     3372
+##       taxon.group       0    44468 44468        9
+##        taxon.name       0    44468 44468     1768
+##  variable.context   44260      208 44468        5
+##  variable.element       0    44468 44468      312
+##    variable.units       0    44468 44468        8
+##                                    top_counts ordered
+##        Dry: 292, Pec: 274, Zet: 245, Bry: 220   FALSE
+##   Mam: 39739, Bir: 2115, Rep: 1364, Fis: 1126   FALSE
+##      Odo: 1276, Ave: 1093, Cas: 981, Pro: 962   FALSE
+##         NA: 44260, int: 121, art: 44, red: 32   FALSE
+##    bon: 37079, bon: 3210, bon: 1244, bon: 932   FALSE
+##  pre: 17936, NIS: 14271, MNI: 12155, MNE: 100   FALSE
+## 
+## Variable type: integer 
+##   variable missing complete     n     mean       sd  p0      p25     p50
+##  iteration       0    44468 44468  1621.6   1133.84   1   594.75  1511  
+##    site.id       0    44468 44468  5641.98  2839.89 244  4064     4865  
+##          X       0    44468 44468 22234.5  12836.95   1 11117.75 22234.5
+##       p75  p100     hist
+##   2539     3853 ▇▅▅▅▃▃▅▃
+##   5760    16264 ▁▅▇▁▁▁▁▁
+##  33351.25 44468 ▇▇▇▇▇▇▇▇
+## 
+## Variable type: numeric 
+##     variable missing complete     n     mean       sd      p0     p25
+##    age.older    5654    38814 44468 15553.07 50860.17   29    1000   
+##  age.younger    5654    38814 44468  5314.49 21743.28    0     350   
+##          lat       3    44465 44468    39.66     7.15  -18.68   35.62
+##         long       3    44465 44468   -99.64    28.55 -176.62 -110.62
+##      p50      p75       p100     hist
+##  2200    11135    1500000    ▇▁▁▁▁▁▁▁
+##   950     6700      4e+05    ▇▁▁▁▁▁▁▁
+##    38.87    42.77      82.5  ▁▁▁▁▇▂▁▁
+##   -99.12   -89        177.63 ▁▇▂▁▁▁▁▁
+</code></pre></div></div>
+
+<p><strong>Emoji Love interlude</strong>: 😍😍😍 * 100.  This package is amazing!!! Please read about all the features on the <a href="https://github.com/ropenscilabs/skimr"><code class="highlighter-rouge">skimr</code></a> Github repo and <a href="https://ropensci.org/blog/2017/07/11/skimr/">the blog post</a> describing the motivation and collaborative effort involved in making it. I just read it and I am bursting with love for the R community. Man. Now I just want to do a whole post on how 💣 bomb <code class="highlighter-rouge">skimr</code> is. 🔥🔥 AND yesterday, the <a href="https://www.r-consortium.org/announcement/2018/03/27/r-consortium-welcomes-r-ladies-as-a-top-level-project">Rconsortium announced</a> that they are adding <a href="https://rladies.org/">RLadies</a> as a top-level project! 🙆🏻 🤘⚡</p>
+
+<h2 id="mapping-taxon-onto-a-map">Mapping taxon onto a map</h2>
+
+<p>Right away I see that I have enough information to start visualizing species distributions in time.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># I have a love / hate relationship with this first species</span><span class="w">
+</span><span class="n">humans</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mammals</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">taxon.name</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"Homo sapiens"</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">long</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">-160</span><span class="p">)</span><span class="w"> </span><span class="c1">#ignoring samples out in the middle of the ocean</span><span class="w">
+
+</span><span class="c1"># Start with world</span><span class="w">
+</span><span class="n">world</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">map_data</span><span class="p">(</span><span class="s2">"world"</span><span class="p">)</span><span class="w"> 
+
+</span><span class="n">ggplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_polygon</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">world</span><span class="p">,</span><span class="w"> 
+               </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"grey38"</span><span class="p">,</span><span class="w"> 
+               </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">long</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">group</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">coord_fixed</span><span class="p">(</span><span class="m">1.3</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">humans</span><span class="p">,</span><span class="w"> 
+             </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">long</span><span class="p">,</span><span class="w"> 
+                 </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lat</span><span class="p">,</span><span class="w">
+                 </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">age.older</span><span class="p">),</span><span class="w">
+             </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.7</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.7</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_color_continuous</span><span class="p">(</span><span class="n">guide</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guide_legend</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Age (years ago)"</span><span class="p">))</span><span class="w">  </span><span class="o">+</span><span class="w">
+    </span><span class="n">guides</span><span class="p">(</span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guide_legend</span><span class="p">(</span><span class="n">override.aes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">)))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Geographic Distribution of Homo sapien Samples"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="../assets/img/2018-03-28-exploring-neotoma-part2_files/figure-html/unnamed-chunk-4-1.png" alt="" /><!-- --></p>
+
+<p>We notice that the sampling is skewed towards North America for sure! So let’s zoom in on the United States.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">usa</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">map_data</span><span class="p">(</span><span class="s2">"state"</span><span class="p">)</span><span class="w"> 
+
+</span><span class="n">ggplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_polygon</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">usa</span><span class="p">,</span><span class="w"> 
+               </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"grey38"</span><span class="p">,</span><span class="w"> 
+               </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">long</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">group</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">coord_fixed</span><span class="p">(</span><span class="m">1.3</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">humans</span><span class="p">,</span><span class="w"> 
+             </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">long</span><span class="p">,</span><span class="w"> 
+                 </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lat</span><span class="p">,</span><span class="w">
+                 </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">age.older</span><span class="p">),</span><span class="w">
+             </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.7</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.4</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">guides</span><span class="p">(</span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guide_legend</span><span class="p">(</span><span class="n">override.aes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">)))</span><span class="w"> </span><span class="o">+</span><span class="w">
+   </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Geographic Distribution of Homo sapien Samples"</span><span class="p">)</span><span class="w"> 
+</span></code></pre></div></div>
+
+<p><img src="../assets/img/2018-03-28-exploring-neotoma-part2_files/figure-html/unnamed-chunk-5-1.png" alt="" /><!-- --></p>
+
+<p>Awesome! Looks like you can really see how the age of these samples are really skewed towards younger age samples. Which you can see clearly when you use <code class="highlighter-rouge">skimr</code>.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">skim</span><span class="p">(</span><span class="n">mammals</span><span class="o">$</span><span class="n">age.older</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Skim summary statistics
+## 
+## Variable type: numeric 
+##           variable missing complete     n     mean       sd p0  p25  p50
+##  mammals$age.older    3995    35744 39739 16256.64 52095.64 29 1000 2250
+##    p75    p100     hist
+##  11470 1500000 ▇▁▁▁▁▁▁▁
+</code></pre></div></div>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">skim</span><span class="p">(</span><span class="n">mammals</span><span class="o">$</span><span class="n">age.younger</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Skim summary statistics
+## 
+## Variable type: numeric 
+##             variable missing complete     n    mean       sd p0 p25  p50
+##  mammals$age.younger    3995    35744 39739 5523.97 22507.27  0 350 1000
+##   p75  p100     hist
+##  7805 4e+05 ▇▁▁▁▁▁▁▁
+</code></pre></div></div>
+
+<p>Let’s try another another genus, like a genus of Saber Tooth Tigers, <em>Smilodon</em>.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">smilodon</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mammals</span><span class="p">[</span><span class="n">grepl</span><span class="p">(</span><span class="s2">"Smilodon "</span><span class="p">,</span><span class="w"> </span><span class="n">mammals</span><span class="o">$</span><span class="n">taxon.name</span><span class="p">),]</span><span class="w">
+
+</span><span class="n">unique</span><span class="p">(</span><span class="n">smilodon</span><span class="o">$</span><span class="n">taxon.name</span><span class="p">)</span><span class="w"> </span><span class="c1"># looks like 5 unique categories.</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## [1] Smilodon fatalis        cf. Smilodon fatalis    Smilodon sp.           
+## [4] cf. Smilodon floridanus Smilodon gracilis      
+## 1768 Levels: ?Alces alces ?Alces sp. ?Bison bison antiquus ... Zoarcoidei
+</code></pre></div></div>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">usa</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">map_data</span><span class="p">(</span><span class="s2">"state"</span><span class="p">)</span><span class="w"> 
+
+</span><span class="n">ggplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">geom_polygon</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">usa</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"grey30"</span><span class="p">,</span><span class="w"> 
+               </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">long</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">group</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+  </span><span class="n">coord_fixed</span><span class="p">(</span><span class="m">1.3</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_point</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">smilodon</span><span class="p">,</span><span class="w"> 
+             </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">long</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">taxon.name</span><span class="p">),</span><span class="w">
+             </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.9</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.7</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">scale_color_brewer</span><span class="p">(</span><span class="n">palette</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Pastel1"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"white"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">guides</span><span class="p">(</span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guide_legend</span><span class="p">(</span><span class="n">override.aes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">)))</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Geographic Distribution of Smilodon Samples"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="../assets/img/2018-03-28-exploring-neotoma-part2_files/figure-html/unnamed-chunk-7-1.png" alt="" /><!-- --></p>
+
+<p>Ooooo Sabertooth Tigers seem to like warmer climates, that is, if North American climate during the times of these samples was anything like today’s climate, which it wasn’t really…</p>
+
+<p>Now I can only go so far in exploring the data this way. The groupings of taxon is limited to species or genus, but what if I really want to see the distribution of higher order taxonomic groups. 
+This is where taxize comes in.</p>
+
+<h2 id="adding-taxonomic-classifications-with-taxize">Adding taxonomic classifications with <code class="highlighter-rouge">taxize</code></h2>
+
+<p><a href="https://github.com/ropensci/taxize"><code class="highlighter-rouge">taxize</code></a> is such a useful package. I cannot imagine doing work on biodiversiry data without this package. There have been a lot of people who have contributed to this package, but it looks like <a href="https://twitter.com/sckottie">Scott Chamberlain</a> (R wizard, Ropensci co-founder, and fellow cat lover) is the main person behind these efforts. Thanks Scott and all you other <a href="https://github.com/ropensci/taxize/graphs/contributors">contributors</a>!</p>
+
+<p>The <code class="highlighter-rouge">taxize</code> package provides a <a href="https://ropensci.org/tutorials/taxize_tutorial/">nice tutorial</a> to get an overview of how to use the package. There are a lot of great functions to add meaning to any dataset with taxa/species names.</p>
+
+<p>For us to understand how to get the most out of <code class="highlighter-rouge">taxize</code> for this particular dataset, we should mess around with a smaller subset of species.  In this case, let’s grab all the species we can find from the extinct genus <a href="https://en.wikipedia.org/wiki/Mammoth">Mammuthus</a> (Mammoths).</p>
+
+<p>The main reason we want to use this package is to group the <code class="highlighter-rouge">taxon.name</code> information into something more digestible - for instance higher taxonomic groups (order, class, genus).</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## Mammuthus is </span><span class="w">
+</span><span class="n">mammoth_test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mammals</span><span class="p">[</span><span class="n">grepl</span><span class="p">(</span><span class="s2">"Mammuthus"</span><span class="p">,</span><span class="w"> </span><span class="n">mammals</span><span class="o">$</span><span class="n">taxon.name</span><span class="p">),]</span><span class="w">
+</span><span class="n">unique</span><span class="p">(</span><span class="n">mammoth_test</span><span class="o">$</span><span class="n">taxon.name</span><span class="p">)</span><span class="w"> </span><span class="c1"># 16 unique Mammoth taxon names</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##  [1] Mammuthus columbi            Mammuthus sp.               
+##  [3] cf. Mammuthus columbi        cf. Mammuthus jeffersonii   
+##  [5] Mammuthus primigenius        Mammuthus imperator         
+##  [7] Mammuthus jeffersonii        Mammuthus cf. M. columbi    
+##  [9] cf. Mammuthus sp.            Mammuthus exilis            
+## [11] Mammuthus cf. M. primigenius Mammuthus cf. M. jeffersonii
+## [13] Mammuthus cf. M. imperator   Mammuthus                   
+## [15] ?Mammuthus sp.               cf. Mammuthus primigenius   
+## 1768 Levels: ?Alces alces ?Alces sp. ?Bison bison antiquus ... Zoarcoidei
+</code></pre></div></div>
+
+<p><strong>Note 1</strong>: The key to this package is that it is the glue that unites many databases and some of these databases require you to obtain an API key to access. See full list on the <a href="https://github.com/ropensci/taxize">Taxize Github site</a>.</p>
+
+<p><strong>Note 2</strong>: Omitted in this tutorial is where I basically played with many of the functions with different data sources. This package is so diverse because of the different databases it interacts with. Each database might have specific qualities for a data set.  I would play with different functions with different data sources quite a bit if you plan on using <code class="highlighter-rouge">taxize</code> for your own data set. We ended up using the <a href="https://tree.opentreeoflife.org/opentree/argus/opentree9.1@ott93302">Open Tree of Life</a> (<code class="highlighter-rouge">tol</code>) database as a data source.</p>
+
+<h2 id="test-of-taxize-with-small-example-of-mammoth-samples">Test of taxize with small example of Mammoth samples</h2>
+
+<p>The <code class="highlighter-rouge">taxize::classification</code> function works great using just the word “Mammuthus” and the Tree of Life Database.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## Take a min to run</span><span class="w">
+</span><span class="n">classification</span><span class="p">(</span><span class="s2">"Mammuthus"</span><span class="p">,</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'tol'</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## $Mammuthus
+##                    name       rank      id
+## 1                  life    no rank  805080
+## 2    cellular organisms    no rank   93302
+## 3             Eukaryota     domain  304358
+## 4          Opisthokonta    no rank  332573
+## 5               Holozoa    no rank 5246131
+## 6               Metazoa    kingdom  691846
+## 7             Eumetazoa    no rank  641038
+## 8             Bilateria    no rank  117569
+## 9         Deuterostomia    no rank  147604
+## 10             Chordata     phylum  125642
+## 11             Craniata  subphylum  947318
+## 12           Vertebrata  subphylum  801601
+## 13        Gnathostomata superclass  278114
+## 14           Teleostomi    no rank  114656
+## 15         Euteleostomi    no rank  114654
+## 16        Sarcopterygii      class  458402
+## 17 Dipnotetrapodomorpha    no rank 4940726
+## 18            Tetrapoda superclass  229562
+## 19              Amniota    no rank  229560
+## 20             Mammalia      class  244265
+## 21               Theria   subclass  229558
+## 22             Eutheria    no rank  683263
+## 23           Afrotheria superorder  746703
+## 24          Proboscidea      order  226176
+## 25         Elephantidae     family  541924
+## 26            Mammuthus      genus  106255
+## 
+## attr(,"class")
+## [1] "classification"
+## attr(,"db")
+## [1] "tol"
+</code></pre></div></div>
+
+<p>But when we use the whole list, we run into taxa name problems. Some of the <code class="highlighter-rouge">taxon.name</code>s from Neotoma do not work well with <code class="highlighter-rouge">taxize</code> data sources. See below.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## Does not like how my taxa.names are written</span><span class="w">
+</span><span class="n">whole_mammoth_test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">classification</span><span class="p">(</span><span class="n">unique</span><span class="p">(</span><span class="n">mammoth_test</span><span class="o">$</span><span class="n">taxon.name</span><span class="p">),</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'tol'</span><span class="p">)</span><span class="w"> 
+
+</span><span class="c1">## Show which species did not work</span><span class="w">
+</span><span class="n">as.data.frame</span><span class="p">(</span><span class="nf">is.na</span><span class="p">(</span><span class="n">whole_mammoth_test</span><span class="p">))</span><span class="w">
+</span></code></pre></div></div>
+
+<p>In order to get the most out of <code class="highlighter-rouge">taxize</code> we have to clean up the <code class="highlighter-rouge">taxon.names</code> so that Neotoma and Tree of Life work friendlier together. I grabbed a regex I saw from a Github gist Simon Goring  wrote <a href="https://gist.github.com/SimonGoring/24fb1228204f768f3f0020f37060db18">gist</a> to help with the issue of cleaning up taxon name data.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## From Simon </span><span class="w">
+</span><span class="c1">## "This doesn't catch things like "sensu stricto" and others."</span><span class="w">
+
+</span><span class="n">mammoth_test</span><span class="o">$</span><span class="n">taxon.name</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">gsub</span><span class="p">(</span><span class="s2">"(\\?|\\-type|cf\\.\\s|aff\\.|\\sundiff\\.)"</span><span class="p">,</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="n">mammoth_test</span><span class="o">$</span><span class="n">taxon.name</span><span class="p">,</span><span class="w"> </span><span class="n">perl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+
+</span><span class="n">table</span><span class="p">(</span><span class="n">mammoth_test</span><span class="o">$</span><span class="n">taxon.name</span><span class="p">)</span><span class="w"> </span><span class="c1"># use table() to both view the new and improved Mammoth taxon.names, and to see how many samples fall under each name.</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## 
+##                Mammuthus        Mammuthus columbi         Mammuthus exilis 
+##                        4                      102                        3 
+##      Mammuthus imperator    Mammuthus jeffersonii     Mammuthus M. columbi 
+##                        6                       18                       15 
+##   Mammuthus M. imperator Mammuthus M. jeffersonii Mammuthus M. primigenius 
+##                       20                       46                       17 
+##    Mammuthus primigenius            Mammuthus sp. 
+##                       33                      214
+</code></pre></div></div>
+
+<p>After cleaning <code class="highlighter-rouge">taxon.name</code> we get the taxonomic classifications for each species in the sample set.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">clean_mammoth_test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">classification</span><span class="p">(</span><span class="n">unique</span><span class="p">(</span><span class="n">mammoth_test</span><span class="o">$</span><span class="n">taxon.name</span><span class="p">),</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'tol'</span><span class="p">)</span><span class="w"> 
+
+</span><span class="c1">## Yay! Much better. No NAs.</span><span class="w">
+</span><span class="n">as.data.frame</span><span class="p">(</span><span class="nf">is.na</span><span class="p">(</span><span class="n">clean_mammoth_test</span><span class="p">))</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##                          is.na(clean_mammoth_test)
+## Mammuthus columbi                            FALSE
+## Mammuthus sp.                                FALSE
+## Mammuthus jeffersonii                        FALSE
+## Mammuthus primigenius                        FALSE
+## Mammuthus imperator                          FALSE
+## Mammuthus M. columbi                         FALSE
+## Mammuthus exilis                             FALSE
+## Mammuthus M. primigenius                     FALSE
+## Mammuthus M. jeffersonii                     FALSE
+## Mammuthus M. imperator                       FALSE
+## Mammuthus                                    FALSE
+</code></pre></div></div>
+
+<p>Now we want to extract  <code class="highlighter-rouge">order</code>, <code class="highlighter-rouge">family</code>, and <code class="highlighter-rouge">genus</code> in <code class="highlighter-rouge">clean_mammoth_test</code> and merge <code class="highlighter-rouge">mammoth_test</code>.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">get_phylogeny</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">phylo_list</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="c1">#phylo list is the tree of life mammoth info data</span><span class="w">
+  </span><span class="c1">#taxon.name &lt;- names(phylo_list) # the current taxa</span><span class="w">
+
+  </span><span class="n">order</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">phylo_list</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+              </span><span class="n">filter</span><span class="p">(</span><span class="n">rank</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"order"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+              </span><span class="p">{</span><span class="n">.</span><span class="o">$</span><span class="n">name</span><span class="p">}</span><span class="w">
+  </span><span class="n">family</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">phylo_list</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+              </span><span class="n">filter</span><span class="p">(</span><span class="n">rank</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"family"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+              </span><span class="p">{</span><span class="n">.</span><span class="o">$</span><span class="n">name</span><span class="p">}</span><span class="w">
+  </span><span class="n">genus</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">phylo_list</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+              </span><span class="n">filter</span><span class="p">(</span><span class="n">rank</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"genus"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+              </span><span class="p">{</span><span class="n">.</span><span class="o">$</span><span class="n">name</span><span class="p">}</span><span class="w">
+  </span><span class="n">tmp_list</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="s2">"order"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="s2">"family"</span><span class="o">=</span><span class="n">family</span><span class="p">,</span><span class="s2">"genus"</span><span class="o">=</span><span class="n">genus</span><span class="p">)</span><span class="w">
+  
+  </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">phylo_list</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+    </span><span class="n">filter</span><span class="p">(</span><span class="n">rank</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"order"</span><span class="p">,</span><span class="w"> </span><span class="s2">"family"</span><span class="p">,</span><span class="w"> </span><span class="s2">"genus"</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">select</span><span class="p">(</span><span class="o">-</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">spread</span><span class="p">(</span><span class="n">rank</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w">
+  
+  </span><span class="k">if</span><span class="p">(</span><span class="nf">dim</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="m">2</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">#probably need a better check here.</span><span class="w">
+    </span><span class="n">missing</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">setdiff</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s2">"order"</span><span class="p">,</span><span class="w"> </span><span class="s2">"family"</span><span class="p">,</span><span class="w"> </span><span class="s2">"genus"</span><span class="p">),</span><span class="w"> </span><span class="n">x</span><span class="o">$</span><span class="n">rank</span><span class="p">)</span><span class="w">
+    </span><span class="n">add</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">missing</span><span class="p">)),</span><span class="w"> </span><span class="n">rank</span><span class="o">=</span><span class="n">missing</span><span class="p">)</span><span class="w">
+    </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rbind</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="p">)</span><span class="w">
+   </span><span class="p">}</span><span class="w">
+  </span><span class="n">tmp_list</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="s2">"order"</span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">$</span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="s2">"family"</span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">$</span><span class="n">family</span><span class="p">,</span><span class="s2">"genus"</span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="o">$</span><span class="n">genus</span><span class="p">)</span><span class="w">
+  </span><span class="nf">return</span><span class="p">(</span><span class="n">tmp_list</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="n">tol_classification_list</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sapply</span><span class="p">(</span><span class="n">clean_mammoth_test</span><span class="p">,</span><span class="w"> </span><span class="n">get_phylogeny</span><span class="p">)</span><span class="w">
+</span><span class="n">tol_classif</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.data.frame</span><span class="p">(</span><span class="n">t</span><span class="p">(</span><span class="n">tol_classification_list</span><span class="p">))</span><span class="w">
+</span><span class="n">tol_classif</span><span class="o">$</span><span class="n">taxon.name</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rownames</span><span class="p">(</span><span class="n">tol_classif</span><span class="p">)</span><span class="w">
+</span><span class="n">rownames</span><span class="p">(</span><span class="n">tol_classif</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">
+
+</span><span class="n">merged</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">merge</span><span class="p">(</span><span class="n">mammoth_test</span><span class="p">,</span><span class="w"> </span><span class="n">tol_classif</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"taxon.name"</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">## Lets take a peak of the dataset</span><span class="w">
+</span><span class="n">merged</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">select</span><span class="p">(</span><span class="n">taxon.name</span><span class="p">,</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">family</span><span class="p">,</span><span class="w"> </span><span class="n">genus</span><span class="p">,</span><span class="w"> </span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">long</span><span class="p">,</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">head</span><span class="p">()</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##          taxon.name       order       family     genus      lat       long
+## 1         Mammuthus Proboscidea Elephantidae Mammuthus 43.62500  -99.29167
+## 2         Mammuthus Proboscidea Elephantidae Mammuthus 33.51389 -117.02917
+## 3         Mammuthus Proboscidea Elephantidae Mammuthus 45.90623 -112.02300
+## 4         Mammuthus Proboscidea Elephantidae Mammuthus 29.61667  -98.36667
+## 5 Mammuthus columbi Proboscidea Elephantidae Mammuthus 39.86667 -102.25000
+## 6 Mammuthus columbi Proboscidea Elephantidae Mammuthus 39.50000 -105.06667
+</code></pre></div></div>
+
+<p>Looks good!</p>
+
+<p><strong>Note</strong>: You can really do this with any subset of the Neotoma mammals dataset, but if you do it with the whole thing, it takes a long time and you need a tad more cleanup. Maybe we can go into this in another post.</p>
+
+<h2 id="apply-to-larger-dataset---extinct-species">Apply to larger dataset - extinct species</h2>
+
+<p>While wondering around the Neotoma database I found out that if you use <code class="highlighter-rouge">neotoma::get_table</code> on the “taxa” dataset, you get a column that tells you if the animal is extinct or not. What is more interesting to extinct species? Nothing. Expecially in North America! There are Mammoths, huge armidillos, Saber Tooth Tigers, Giant Sloths and more!</p>
+
+<p>Let’s try to get the taxonomic classifications of all the extinct animals.</p>
+
+<p>First we subset by extinct taxa:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">neotoma_taxa</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">neotoma</span><span class="o">::</span><span class="n">get_table</span><span class="p">(</span><span class="s2">"taxa"</span><span class="p">)</span><span class="w">
+</span><span class="n">extinct_taxa</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">neotoma_taxa</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">Extinct</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"TRUE"</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">## Find the intersect of extinct taxa and our mammal dataset</span><span class="w">
+</span><span class="n">extinct_species_in_mammals</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">intersect</span><span class="p">(</span><span class="n">extinct_taxa</span><span class="o">$</span><span class="n">TaxonName</span><span class="p">,</span><span class="w"> </span><span class="n">mammals</span><span class="o">$</span><span class="n">taxon.name</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">## Great! 383 of these extinct species are found in our</span><span class="w">
+</span><span class="c1">## mammal dataset.</span><span class="w">
+</span><span class="n">skim</span><span class="p">(</span><span class="n">extinct_species_in_mammals</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Skim summary statistics
+## 
+## Variable type: character 
+##                    variable missing complete   n min max empty n_unique
+##  extinct_species_in_mammals       0      383 383   6  39     0      383
+</code></pre></div></div>
+
+<p>Now let’s subset our <code class="highlighter-rouge">mammals</code> dataset to include only extinct species.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">extinct_mammals</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">mammals</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+                      </span><span class="n">filter</span><span class="p">(</span><span class="n">taxon.name</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="n">extinct_species_in_mammals</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">## Check</span><span class="w">
+</span><span class="c1">## skim(extinct_mammals) </span><span class="w">
+</span><span class="n">nrow</span><span class="p">(</span><span class="n">extinct_mammals</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## [1] 3013
+</code></pre></div></div>
+
+<p>3,003 bone samples in our data set come from extinct animals. Now that we have a nice subset of our species, let’s go ahead and use <code class="highlighter-rouge">taxize</code> to merge in genus, order, and family details for each sample.</p>
+
+<h3 id="clean">Clean</h3>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">extinct_mammals</span><span class="o">$</span><span class="n">taxon.name</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">gsub</span><span class="p">(</span><span class="s2">"(\\?|\\-type|cf\\.\\s|aff\\.|\\sundiff\\.)"</span><span class="p">,</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="n">extinct_mammals</span><span class="o">$</span><span class="n">taxon.name</span><span class="p">,</span><span class="w"> </span><span class="n">perl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># this species throws an error later</span><span class="w">
+</span><span class="c1"># during classification step, remove</span><span class="w">
+</span><span class="n">extinct_mammals</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">extinct_mammals</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">taxon.name</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s1">'Ammospermophilus leucurus'</span><span class="p">)</span><span class="w"> 
+
+</span><span class="c1">## remove white space at the beginning taxon names, </span><span class="w">
+</span><span class="c1">## if it exists, using the base function trimws()</span><span class="w">
+</span><span class="n">extinct_mammals</span><span class="o">$</span><span class="n">taxon.name</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">trimws</span><span class="p">(</span><span class="n">extinct_mammals</span><span class="o">$</span><span class="n">taxon.name</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="prepare-data-frames">Prepare data frames</h3>
+
+<p><strong>Note</strong>: You have to interact with the <code class="highlighter-rouge">taxize</code> package to manually pick the ambiguities in species. <code class="highlighter-rouge">taxize</code> will present all the possible species that it found and you can manually pick which one you intended. This is a really cool feature, but beware, if using R Markdown, this cell cannot be evaluated with knitr.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## Warning: This next line takes awhile to run. </span><span class="w">
+</span><span class="c1">## and also requires manual interaction</span><span class="w">
+</span><span class="c1">## you can download data set below</span><span class="w">
+</span><span class="c1">## Manual selection key: 1, 0, 2, 0, 2, 1 </span><span class="w">
+</span><span class="n">extinct_tol</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">classification</span><span class="p">(</span><span class="n">unique</span><span class="p">(</span><span class="n">extinct_mammals</span><span class="o">$</span><span class="n">taxon.name</span><span class="p">),</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'tol'</span><span class="p">)</span><span class="w"> 
+
+</span><span class="c1">## You end up with a list of dataframes. </span><span class="w">
+</span><span class="c1">## One for each taxon.name input</span><span class="w">
+
+</span><span class="nf">length</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">extinct_tol</span><span class="p">[</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">extinct_tol</span><span class="p">)]))</span><span class="w"> </span><span class="c1"># 286 were classified</span><span class="w">
+</span><span class="nf">length</span><span class="p">(</span><span class="nf">names</span><span class="p">((</span><span class="n">extinct_tol</span><span class="p">[</span><span class="nf">is.na</span><span class="p">(</span><span class="n">extinct_tol</span><span class="p">)])))</span><span class="w"> </span><span class="c1">#27 were not classified</span><span class="w">
+
+</span><span class="c1">## Keep only dataframes that are not NA</span><span class="w">
+</span><span class="n">extinct_tol</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">extinct_tol</span><span class="p">[</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">extinct_tol</span><span class="p">)]</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="make-data-frame-to-merge-with">Make data frame to merge with</h3>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">extinct_tol_list</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">()</span><span class="w">
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">extinct_tol</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">taxon.name</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="n">extinct_tol</span><span class="p">)[</span><span class="n">i</span><span class="p">]</span><span class="w">
+
+  </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">extinct_tol</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 
+    </span><span class="n">filter</span><span class="p">(</span><span class="n">rank</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"order"</span><span class="p">,</span><span class="w"> </span><span class="s2">"family"</span><span class="p">,</span><span class="w"> </span><span class="s2">"genus"</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">select</span><span class="p">(</span><span class="o">-</span><span class="n">id</span><span class="p">)</span><span class="w">
+  
+  </span><span class="k">if</span><span class="p">(</span><span class="nf">dim</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">#probably need a better check here.</span><span class="w">
+    </span><span class="n">missing</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">setdiff</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s2">"order"</span><span class="p">,</span><span class="w"> </span><span class="s2">"family"</span><span class="p">,</span><span class="w"> </span><span class="s2">"genus"</span><span class="p">),</span><span class="w"> </span><span class="n">x</span><span class="o">$</span><span class="n">rank</span><span class="p">)</span><span class="w">
+    </span><span class="n">add</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">rep</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">missing</span><span class="p">)),</span><span class="w"> </span><span class="n">rank</span><span class="o">=</span><span class="n">missing</span><span class="p">)</span><span class="w">
+    </span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rbind</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">add</span><span class="p">)</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+  
+  </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">taxon.name</span><span class="p">,</span><span class="w"> </span><span class="nf">as.character</span><span class="p">(</span><span class="n">x</span><span class="o">$</span><span class="n">name</span><span class="p">))</span><span class="w">
+  </span><span class="nf">names</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"taxon.name"</span><span class="p">,</span><span class="w"> </span><span class="s2">"order"</span><span class="p">,</span><span class="w"> </span><span class="s2">"family"</span><span class="p">,</span><span class="w"> </span><span class="s2">"genus"</span><span class="p">)</span><span class="w">
+  </span><span class="n">extinct_tol_list</span><span class="p">[[</span><span class="n">i</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">y</span><span class="w">
+
+</span><span class="p">}</span><span class="w">
+
+
+</span><span class="n">tol_classification</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.data.frame</span><span class="p">(</span><span class="n">do.call</span><span class="p">(</span><span class="n">rbind</span><span class="p">,</span><span class="w"> </span><span class="n">extinct_tol_list</span><span class="p">))</span><span class="w">
+</span><span class="n">tol_classification</span><span class="p">[,</span><span class="m">5</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w"> </span><span class="c1">#whoops repeated column</span><span class="w">
+
+</span><span class="n">extinct_merged</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">merge</span><span class="p">(</span><span class="n">extinct_mammals</span><span class="p">,</span><span class="w"> </span><span class="n">tol_classification</span><span class="p">,</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"taxon.name"</span><span class="p">,</span><span class="w"> </span><span class="n">all.x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span><span class="nf">dim</span><span class="p">(</span><span class="n">extinct_merged</span><span class="p">)</span><span class="w">
+
+</span><span class="c1">## Write out</span><span class="w">
+</span><span class="c1">## write.csv(extinct_merged, "../data/part2_extinct_merged_27March2018_caryn.csv", row.names = FALSE)</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="visualizing-extinct-animals">Visualizing extinct animals</h2>
+
+<p>Now we have a nice data set of all the extinct mammals bone samples found in the Neotoma database. So exciting. Let’s start visualizing to 1. make sure everything is correct 2. See if there are patterns in the data to start exploring further.</p>
+
+<p>You can download the data set here: <a href="/assets/downloads/extinct_mammals.csv" target="_blank">extinct_mammals.csv</a></p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## Read in data frame</span><span class="w">
+</span><span class="n">extinct_merged</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.csv</span><span class="p">(</span><span class="s2">"../data/part2_extinct_merged_27March2018.csv"</span><span class="p">)</span><span class="w">
+
+</span><span class="n">extinct_merged</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">order</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">count</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">ggplot</span><span class="p">(</span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">reorder</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+      </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"identity"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+      </span><span class="n">theme_bw</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+      </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.text.x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">90</span><span class="p">,</span><span class="w"> </span><span class="n">hjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+      </span><span class="n">xlab</span><span class="p">(</span><span class="s2">"Extinct Mammals"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+      </span><span class="n">ylab</span><span class="p">(</span><span class="s2">"# of samples"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+      </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Number of Extinct Mammal Samples in Each Animal Order"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="../assets/img/2018-03-28-exploring-neotoma-part2_files/figure-html/unnamed-chunk-19-1.png" alt="" /><!-- --></p>
+
+<p>There are 18 different orders of species, with the most abundant being <em>Cetarticodactyla</em> or <a href="https://en.wikipedia.org/wiki/Even-toed_ungulate">even-toed undulates</a>. There are also orders that are clearly not supposed to be there. I may not know animal taxonomic information very well, but for sure I know plants. <em>Zingerberales</em> is not supposed to be here!</p>
+
+<p>I tried using <code class="highlighter-rouge">taxize</code> to retrieve the common names, but in the end, I could not easily. I ended up just Googling each one and actually had wayyyyy too much fun doing it. I figured out which are animals and which are not and made a list for subsetting. It may not be programmatically reproducible, but that’s okay because I learned so much.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">orders_to_keep</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Rodentia"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Proboscidea"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Pilosa"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Perissodactyla"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Lagomorpha"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Didelphimorphia"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Cingulata"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Chiroptera"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Cetartiodactyla"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Carnivora"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Anguilliformes"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Primates"</span><span class="p">)</span><span class="w">	
+
+</span><span class="n">extinct_merged</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> 	
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">order</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="n">orders_to_keep</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">	
+  </span><span class="n">group_by</span><span class="p">(</span><span class="n">order</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">	
+  </span><span class="n">count</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">	
+  </span><span class="n">ggplot</span><span class="p">(</span><span class="n">.</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">reorder</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">n</span><span class="p">),</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+    </span><span class="n">geom_bar</span><span class="p">(</span><span class="n">stat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"identity"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">theme_bw</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">	
+    </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.text.x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">angle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">90</span><span class="p">,</span><span class="w"> </span><span class="n">hjust</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">xlab</span><span class="p">(</span><span class="s2">"Extinct Mammals"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">ylab</span><span class="p">(</span><span class="s2">"# of samples"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Number of Extinct Mammal Samples in Each Animal Order"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="../assets/img/2018-03-28-exploring-neotoma-part2_files/figure-html/unnamed-chunk-20-1.png" alt="" /><!-- --></p>
+
+<h3 id="visualize-on-map">Visualize on map</h3>
+
+<p>So cool!</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">usa</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">map_data</span><span class="p">(</span><span class="s2">"state"</span><span class="p">)</span><span class="w"> 
+
+</span><span class="n">extinct_merged</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">order</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="n">orders_to_keep</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">lat</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">50</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">ggplot</span><span class="p">(</span><span class="n">.</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+      </span><span class="n">geom_polygon</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">usa</span><span class="p">,</span><span class="w"> 
+              </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"grey30"</span><span class="p">,</span><span class="w"> 
+              </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">long</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">group</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+      </span><span class="n">coord_fixed</span><span class="p">(</span><span class="m">1.3</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+      </span><span class="n">geom_point</span><span class="p">(</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">long</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">order</span><span class="p">),</span><span class="w">  
+             </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.7</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.5</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_color_brewer</span><span class="p">(</span><span class="n">palette</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Set3"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"white"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">guides</span><span class="p">(</span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guide_legend</span><span class="p">(</span><span class="n">override.aes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">)))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Geographic Distribution of Extinct Mammal Samples"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="../assets/img/2018-03-28-exploring-neotoma-part2_files/figure-html/unnamed-chunk-21-1.png" alt="" /><!-- --></p>
+
+<p>What is going on with the Animal Order <em>Proboscidea</em>?</p>
+
+<p>We see some clustering in Michigan, let’s break that down a little bit to see what is going on.</p>
+
+<p><strong>Note</strong>: <a href="https://en.wikipedia.org/wiki/Proboscidea"><em>Proboscidea</em></a> is the animal order in which elephants belong. Interestingly, the only <em>Proboscidea</em> two species left on earth are in  <a href="https://en.wikipedia.org/wiki/Elephantidae">Elephantidae</a> 😭🐘</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">extinct_merged</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">order</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="n">orders_to_keep</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">order</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"Proboscidea"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">lat</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">50</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">ggplot</span><span class="p">(</span><span class="n">.</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+      </span><span class="n">geom_polygon</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">usa</span><span class="p">,</span><span class="w"> 
+              </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"grey30"</span><span class="p">,</span><span class="w"> 
+              </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">long</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">group</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+      </span><span class="n">coord_fixed</span><span class="p">(</span><span class="m">1.3</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+      </span><span class="n">geom_point</span><span class="p">(</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">long</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">genus</span><span class="w"> </span><span class="p">),</span><span class="w">  
+             </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.7</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.6</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">scale_color_brewer</span><span class="p">(</span><span class="n">palette</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Pastel1"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"white"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">guides</span><span class="p">(</span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guide_legend</span><span class="p">(</span><span class="n">override.aes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">)))</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">facet_grid</span><span class="p">(</span><span class="n">family</span><span class="o">~</span><span class="n">.</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Geographic Distribution of Proboscidea Samples"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="../assets/img/2018-03-28-exploring-neotoma-part2_files/figure-html/unnamed-chunk-22-1.png" alt="" /><!-- --></p>
+
+<p>Wow! This is awesome. I didn’t really know anything about <a href="https://en.wikipedia.org/wiki/Gomphothere">Gomphothere</a> before. This family is distinct from elephants and became extinct before Elephants and Mammoths / Mastodons, so it makes sense the scarcity of samples in the North America during these times. They were slowly replaced by modern elephants until their extinction around 10,000 years ago.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">extinct_merged</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">order</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="n">orders_to_keep</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">order</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"Proboscidea"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">skim</span><span class="p">(</span><span class="n">age.older</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Skim summary statistics
+##  n obs: 754 
+##  n variables: 17 
+## 
+## Variable type: numeric 
+##   variable missing complete   n     mean       sd   p0   p25   p50    p75
+##  age.older     162      592 754 57976.92 46002.23 1150 15000 35000 110000
+##    p100     hist
+##  160000 ▇▃▁▁▁▇▁▁
+</code></pre></div></div>
+
+<p>That Michigan cluster of samples seems to be prodomidently from the <a href="https://en.wikipedia.org/wiki/Mammutidae">Mammutidae</a> Family.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">extinct_merged</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">order</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="n">orders_to_keep</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">family</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"Mammutidae"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">filter</span><span class="p">(</span><span class="n">lat</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">50</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">ggplot</span><span class="p">(</span><span class="n">.</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+      </span><span class="n">geom_polygon</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">usa</span><span class="p">,</span><span class="w"> 
+              </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"grey30"</span><span class="p">,</span><span class="w"> 
+              </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">long</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">group</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+      </span><span class="n">coord_fixed</span><span class="p">(</span><span class="m">1.3</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+      </span><span class="n">geom_point</span><span class="p">(</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">long</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lat</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">taxon.name</span><span class="w"> </span><span class="p">),</span><span class="w">  
+             </span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.7</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.7</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">scale_color_brewer</span><span class="p">(</span><span class="n">palette</span><span class="o">=</span><span class="s2">"Pastel1"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_rect</span><span class="p">(</span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"white"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">guides</span><span class="p">(</span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guide_legend</span><span class="p">(</span><span class="n">override.aes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">)))</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Geographic Distribution of Mammutidae Samples"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p><img src="../assets/img/2018-03-28-exploring-neotoma-part2_files/figure-html/unnamed-chunk-24-1.png" alt="" /><!-- --></p>
+
+<p>The majority of the taxa is made up of Mastodon samples <a href="https://en.wikipedia.org/wiki/Mastodon"><em>Mammut americanum</em></a>, which apparently were the most successful North American <em>Proboscidea</em> species.</p>
+
+<h2 id="incorporation-of-more-data">Incorporation of More Data</h2>
+
+<p>I wanted to see if I could make sense of the habitat of these species or climate during the Pliocene to map onto the plot, but unfortunatley I could not find mappable data. I wish I had <a href="https://www.researchgate.net/publication/37456896_Modelling_Middle_Pliocene_warm_climates_of_the_USA">this papers</a> data. This is a question I had many times during these this analysis.  Does anyone know where we can get predicted ancient global temperature?</p>
+
+<p>As we explore more databases we hope to gain a better understanding of the data available and how they can be combined to provide insights into our natural world.</p>
+
+<p>Stay tuned for more exploration!</p>
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+  <li><a href="https://github.com/ropensci/neotoma">Neotoma R Package on Github</a></li>
+  <li><a href="https://github.com/NeotomaDB/Workshops/blob/master/IBS2017/R/Workshop_IBS2017_v0.3.pdf">2017 Workshop Neotoma</a></li>
+  <li><a href="https://gist.github.com/SimonGoring/24fb1228204f768f3f0020f37060db18">Simon’s Neotoma Taxize Gist</a></li>
+  <li><a href="http://viktoriawagner.weebly.com/blog/cleaning-species-names-with-r-ii-taxize">Cleaning species names with Taxize tutorial</a></li>
+</ul>
+
+
+      <div class="page-footer">
+        <div class="page-share">
+          <a href="https://twitter.com/intent/tweet?text=Neotoma Part II: extinct mammal distributions&url=http://localhost:4000/exploring-neotoma-part2/" title="Share on Twitter" rel="nofollow" target="_blank">Twitter</a>
+          <a href="https://facebook.com/sharer.php?u=http://localhost:4000/exploring-neotoma-part2/" title="Share on Facebook" rel="nofollow" target="_blank">Facebook</a>
+          <a href="https://plus.google.com/share?url=http://localhost:4000/exploring-neotoma-part2/" title="Share on Google+" rel="nofollow" target="_blank">Google+</a>
+        </div>
+        <div class="page-tag">
+          
+        </div>
+      </div>
+      <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//cabinetofcuriosity.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+    </div> <!-- End Wrap Content -->
+  </div> <!-- End Page Content -->
+</article> <!-- End Article Page -->
+
+</div>
+
+  </div>
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-116118773-1', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>
