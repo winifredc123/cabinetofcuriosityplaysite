@@ -20,7 +20,7 @@ Samantha is proficient with Python and is familiar with Scheme, SQL, and Java. S
 
 I chose the [Glaucus atlanticus](https://en.wikipedia.org/wiki/Glaucus_atlanticus) because the slug actually looks like a blue dragon (like its name)! 
 
-<center><p><img src="../assets/img/glaucusatlanticus.jpg" alt=""></p></center>
+<center><p><img src="https://en.wikipedia.org/wiki/Glaucus_atlanticus#/media/File:Blue_dragon-glaucus_atlanticus_(8599051974).jpg" alt=""></p></center>
 
  
 ## References
