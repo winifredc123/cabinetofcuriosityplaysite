@@ -1,9 +1,9 @@
 ---
-title: "Lyn's profile"
+title: "Yuqing Lu's profile"
 author: "Yuqing Lu"
 date: '2018-09-22'
 layout: post
-description: Lyn's profile.
+description: Welcome to a new blog that explores natural history data.
 ---
 
 ## Biography 
@@ -24,3 +24,4 @@ I choose the [Sperm Whale](https://en.wikipedia.org/wiki/Sperm_whale), because i
 ## References
 
 1. Sperm Whale Img 1 [life of animals; the mammals, 1852](https://oceanwide-expeditions.com/to-do/wildlife/sperm-whale): [Link to page](https://oceanwide-4579.kxcdn.com/uploads/media-dynamic/cache/widen_1100/uploads/media/default/0001/18/thumb_17956_default_1600.jpeg)
+
