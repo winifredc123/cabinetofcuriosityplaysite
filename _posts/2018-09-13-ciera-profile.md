@@ -19,7 +19,7 @@ Ciera knows a lot about Plant Biology, Evolution, R, and knitting.
 
 ## Awesome Animal Pick
 
-I choose the [Okapi](https://en.wikipedia.org/wiki/Okapi), because it's looks like a mix between a two other awesome animals - zebras and giraffes. Also, being an evolutionary biologist I love all organisms considered to be exaples of  "[living fossils](https://en.wikipedia.org/wiki/Living_fossil)"
+I choose the [Okapi](https://en.wikipedia.org/wiki/Okapi), because it looks like a mix between a two other awesome animals - zebras and giraffes. Also, being an evolutionary biologist I love all organisms considered to be exaples of  "[living fossils](https://en.wikipedia.org/wiki/Living_fossil)"
 
 <center><p><img src="../assets/img/okapi.jpg" alt=""></p></center>
  
