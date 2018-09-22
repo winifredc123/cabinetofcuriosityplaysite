@@ -4,7 +4,7 @@ title: "Samantha Tang's profile"
 date: 2018-09-21
 author: Samantha Tang
 description: Testing
-img: blue-dragon-or-floating-sea-slug-glaucus-atlanticus-glaucidae-artwork-by-brigette-james_a-l-13589455-8880731
+img: Blue_dragon-glaucus_atlanticus.jpg
 ---
 
 ## Biography 
