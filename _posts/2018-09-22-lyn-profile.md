@@ -19,7 +19,7 @@ I'm comfortable with Python and learning Java and R this semester.
 
 I choose the [Sperm Whale](https://en.wikipedia.org/wiki/Sperm_whale), because it's cute and I think it's cool to "patrol" the deep sea like a submarine!
 
-![](https://upload.wikimedia.org/wikipedia/commons/b/b1/Mother_and_baby_sperm_whale.jpg)
+<center><p><img src="../assets/img/Mother_and_baby_sperm_whale.jpg" alt=""></p></center>
  
 ## References
 
