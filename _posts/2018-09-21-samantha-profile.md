@@ -4,7 +4,7 @@ title: "Samantha Tang's profile"
 date: 2018-09-21
 author: Samantha Tang
 description: Testing
-img: Blue dragon-glaucus atlanticus (8599051974).jpg
+img: Blue dragon-glaucus atlanticus.jpg
 ---
 
 ## Biography 
