@@ -4,7 +4,7 @@ title: "Samantha Tang's profile"
 date: 2018-09-21
 author: Samantha Tang
 description: Testing
-img: Blue_dragon-glaucus_atlanticus.jpg
+img: slug.png
 ---
 
 ## Biography 
@@ -20,11 +20,12 @@ Samantha is proficient with Python and is familiar with Scheme, SQL, and Java. S
 
 I chose the [Glaucus atlanticus](https://en.wikipedia.org/wiki/Glaucus_atlanticus) because the slug actually looks like a blue dragon (like its name)! 
 
-<center><p><img src="../assets/img/Blue_dragon-glaucus_atlanticus.jpg" width="600" height="500" alt=""></p></center>
+<center><p><img src="../assets/img/Blue_dragon-glaucus_atlanticus.jpg" alt=""></p></center>
 
  
 ## References
 
-<!-- 1. Glaucus atlanticus Img 1 [Link to page](blue-dragon-or-floating-sea-slug-glaucus-atlanticus-glaucidae-artwork-by-brigette-james_a-l-13589455-8880731) -->
-1. Glaucus atlanticus Img 1 [Link to page](https://en.wikipedia.org/wiki/Glaucus_atlanticus#/media/File:Blue_dragon-glaucus_atlanticus_(8599051974).jpg)
+1. Glaucus atlanticus Img 1 [Link to image](https://en.wikipedia.org/wiki/Glaucus_atlanticus#/media/File:Blue_dragon-glaucus_atlanticus_(8599051974).jpg)
+
+2. Glaucus atlanticus Img 2 [Link to page](http://boredomtherapy.com/blue-dragon-sea-slug/)
 
