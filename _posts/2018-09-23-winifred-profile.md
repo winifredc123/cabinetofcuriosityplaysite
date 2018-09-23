@@ -10,7 +10,7 @@ Winifred is proficient in Python and Matlab, familiar with SQL, and hopes to pic
 
 I chose the [greater blue-ringed octopus](https://en.wikipedia.org/wiki/Greater_blue-ringed_octopus) because I have always been fascinated with octopus intelligence, and this particular species is beautiful. I also find it interesting that they produce different toxins to use against predators and prey.  
 
-![octopus](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Hapalochlaena_lunulata2.JPG/800px-Hapalochlaena_lunulata2.JPG)
+![octopus](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Hapalochlaena_lunulata2.JPG/800px-Hapalochlaena_lunulata2.JPG){:height="50%" width="50%"}
 
 ## References
 
