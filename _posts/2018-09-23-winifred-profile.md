@@ -12,7 +12,7 @@ I chose the [greater blue-ringed octopus](https://en.wikipedia.org/wiki/Greater_
 
 ![octopus](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Hapalochlaena_lunulata2.JPG/800px-Hapalochlaena_lunulata2.JPG)
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Hapalochlaena_lunulata2.JPG/800px-Hapalochlaena_lunulata2.JPG" width="100" height="100">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Hapalochlaena_lunulata2.JPG/800px-Hapalochlaena_lunulata2.JPG" width="250" height="500">
 
 ## References
 
