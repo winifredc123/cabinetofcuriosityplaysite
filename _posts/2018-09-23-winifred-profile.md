@@ -23,4 +23,5 @@ I chose the [greater blue-ringed octopus](https://en.wikipedia.org/wiki/Greater_
 
 ## References
 
-1. Blue-ringed octopus Img1 [Link to page](https://en.wikipedia.org/wiki/Blue-ringed_octopus#/media/File:Hapalochlaena_lunulata2.JPG)
+1. Blue-ringed octopus Img1 [Link to page](http://www.slate.com/blogs/wild_things/2015/06/23/blue_ringed_octopus_venom_causes_numbness_vomiting_suffocation_death.html)
+2. Blue-ringed octopus Img2 [Link to page](https://en.wikipedia.org/wiki/Blue-ringed_octopus#/media/File:Hapalochlaena_lunulata2.JPG)
