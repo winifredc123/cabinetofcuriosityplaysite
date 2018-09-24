@@ -1,3 +1,12 @@
+---
+layout: post
+title: "Winifred Chung's profile"
+date: 2018-09-23
+author: Winifred Chung
+description: Welcome to a new blog that explores natural history data.
+img: octopus.jpg
+---
+
 ## Biography
 
 **Winifred Chung** is an undergraduate student at UC Berkeley studying Data Science, with a potential emphasis in Biology, Cognition, or Business Analytics (she has yet to narrow down her interests). She finds the intersection of medicine and technology super exciting and hopes to contribute to this area in the future. Her favorite things in the world are sunsets, golden retrievers, and sweet potato fries.
