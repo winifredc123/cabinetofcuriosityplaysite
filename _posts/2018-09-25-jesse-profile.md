@@ -9,7 +9,7 @@ img: Axolotl.jpg
 
 ## Biography
 
-**Jesse Woo** is a Senior undergraduate student at UC Berkeley studying Molecular Cell Biology with an interest in Data Science.
+**Jesse Woo** is a Senior undergraduate student at UC Berkeley studying Molecular Cell Biology with an interest in Data Science. He loves studying Biology and exploring new and exciting places. 
 
 ## Skills
 
