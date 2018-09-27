@@ -4,7 +4,7 @@ title: "Yikang Li's profile"
 date: 2018-09-26
 author: Yikang Li
 description: Welcome to a new blog that explores natural history data.
-img: fish.jpg
+img: fish.png
 ---
 
 ## Biography 
