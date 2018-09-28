@@ -9,7 +9,7 @@ img: Tyrannosaurus.jpg
 
 ## Biography
 
-**Yihui Zhu** is a junior student studying in UCBerkeley. He is majoring in Data Science and Environmental Economics and Policy. I am actively looking for an intern or full time position as a data analyst.
+**Yihui Zhu** is a junior student studying in UC Berkeley. He is majoring in Data Science and Environmental Economics and Policy. He is actively looking for an intern or full time position as a data analyst.
 
 
 ## Skills
@@ -18,7 +18,7 @@ I am proficient in Python, Java and Sql. I am able to handle Tensorflow and Kera
 
 ## Awesome Animal Pick
 
-I choose the [Tyrannosaurus](https://en.wikipedia.org/wiki/Tyrannosaurus). I pick this one because they are giant but have tiny forelimbs"
+I chose the [Tyrannosaurus](https://en.wikipedia.org/wiki/Tyrannosaurus). I pick this one because they are giant but have tiny forelimbs"
 
 <center><p><img src="../assets/img/Tyrannosaurus.jpg" alt=""></p></center>
 
